@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
-    <h1>Hello</h1>
-  </div>
+
 </template>
 
 <script>
-export default {}
+export default {
+  middleware: 'redirected'
+}
 </script>
 
 <style>

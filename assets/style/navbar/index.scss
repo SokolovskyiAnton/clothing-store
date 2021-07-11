@@ -10,12 +10,12 @@
 }
 .nav-header__logo {
     height: 100%;
-    width: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: bold;
-    font-size: 22px;
+    font-size: 23px;
+    padding-right: 18px;
 }
 .nav-header__center {
     display: flex;
@@ -28,8 +28,41 @@
 }
 .nav-header-form__search {
     display: block;
-    
 }
+.nav-header-list {
+    display: flex;
+    list-style: none;
+    text-decoration: none;
+    height: 100%;
+}
+.nav-header-list a {
+    height: 100%;
+    width: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-left: 1px solid rgba(255, 255, 255, 0.205);
+    color: white;
+    font-weight: bold;
+    font-size: 17px;
+    cursor: pointer;
+}
+.nav-header-list a:last-child {
+    border-right: 1px solid rgba(255, 255, 255, 0.205);
+}
+.nav-header-list a:hover {
+    background-color: $background-nav-footer-hover;
+    border: none;
+    text-decoration: none;
+}
+
+.navLinkActive {
+    background-color: $background-nav-footer;
+    border: none !important;
+}
+
+
+
 
 .nav-footer {
     height: 50%;

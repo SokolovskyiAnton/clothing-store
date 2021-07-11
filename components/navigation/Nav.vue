@@ -5,14 +5,10 @@
             <div>Astore</div>
           </div>
           <div class="nav-header__center">
-            <ul>
-              <li>
-                <nuxt-link to="/men">Men</nuxt-link>
-              </li>
-              <li>
-                <nuxt-link to="/women">Women</nuxt-link>
-              </li>
-            </ul>
+            <div class="nav-header-list">
+              <nuxt-link to="/men" :class="{navLinkActive: this.$route.name == 'men'}">Men</nuxt-link>
+              <nuxt-link to="/women" :class="{navLinkActive: this.$route.name == 'women'}">Women</nuxt-link>
+            </div>
 
             <form @submit.prevent="" class="d-flex align-items-center nav-header-form__container">
               <span><font-awesome-icon class="fa" icon="search" /></span>
