@@ -1,8 +1,8 @@
 .nav-shop {
-    height: 120px;
+    height: 110px;
 }
 .nav-header {
-    height: 50%;
+    height: 60px;
     background-color: $background-nav-header;
     color: white;
     padding: 0 32px;
@@ -19,15 +19,26 @@
 }
 .nav-header__center {
     display: flex;
+    width: 100%;
 }
 .nav-header-form__container {
-    border: 1px solid white;
-    background-color: white;
-    border-radius: 10px;
-    padding: 2px;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    padding: 0 15px;
 }
+
 .nav-header-form__search {
-    display: block;
+    font-size: 1rem;
+    width: 100%;
+    border: 0;
+    height: 38px;
+    border-radius: 19px/50%;
+    padding-left: 16px;
+    padding-right: 70px;
+    box-sizing: border-box;
+    color: #2d2d2d;
+    -webkit-appearance: none;
 }
 .nav-header-list {
     display: flex;
@@ -60,11 +71,24 @@
     background-color: $background-nav-footer;
     border: none !important;
 }
-
+.nav-header-icons-list {
+    display: flex;
+}
+.nav-header-icons-list__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    cursor: pointer;
+}
+.fa {
+    width: 1em;
+    height: 1em;
+}
 
 
 
 .nav-footer {
-    height: 50%;
+    height: 50px;
     background-color: $background-nav-footer;
 }

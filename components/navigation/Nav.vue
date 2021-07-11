@@ -10,10 +10,14 @@
               <nuxt-link to="/women" :class="{navLinkActive: this.$route.name == 'women'}">Women</nuxt-link>
             </div>
 
-            <form @submit.prevent="" class="d-flex align-items-center nav-header-form__container">
-              <span><font-awesome-icon class="fa" icon="search" /></span>
-              <input class="nav-header-form__search me-2" type="search" >
+            <form @submit.prevent="" class="nav-header-form__container">
+              
+              <input class="nav-header-form__search" placeholder="Search items" type="search" >
             </form>
+          </div>
+          <div class="nav-header-icons-list">
+            <div class="nav-header-icons-list__item"><font-awesome-icon class="fa" icon="user" /></div>
+            <div class="nav-header-icons-list__item"><font-awesome-icon class="fa" icon="shopping-cart" /></div>
           </div>
         </div>
         <div class="nav-footer"></div>
