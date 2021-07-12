@@ -1,14 +1,14 @@
 <template>
     <div class="nav-shop">
         <div class="nav-header">
-          <div class="nav-container">
+          <div class="nav-header-container">
             <div class="nav-header__logo">
               <div>Astore</div>
             </div>
             <div class="nav-header__center">
               <div class="nav-header-list">
-                <nuxt-link to="/men" :class="{navLinkActive: this.$route.name == 'men'}">Men</nuxt-link>
-                <nuxt-link to="/women" :class="{navLinkActive: this.$route.name == 'women'}">Women</nuxt-link>
+                <nuxt-link to="/men" :class="{navLinkActive: getRoute() == 'men'}">Men</nuxt-link>
+                <nuxt-link to="/women" :class="{navLinkActive: getRoute() == 'women'}">Women</nuxt-link>
               </div>
 
               <form @submit.prevent="" class="nav-header-form__container">
@@ -31,7 +31,9 @@
             </div>
           </div>
         </div>
-        <div class="nav-footer"></div>
+        <div class="nav-footer">
+          <NavCategories />
+        </div>
     </div>
 </template>
 
@@ -45,7 +47,18 @@ import {mapGetters} from 'vuex'
       })
     },
     components: {
-      AccountHoverCard: () => import('./AccountHoverCard')
+      AccountHoverCard: () => import('./AccountHoverCard'),
+      NavCategories: () => import('./NavCategories')
+    },
+    methods: {
+      getRoute() {
+        const route = this.$route.name
+        const arrRoute = route.split('-')
+        return arrRoute[0]
+      }
+    },
+    mounted() {
+      this.getRoute()
     }
 
   }

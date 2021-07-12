@@ -1,0 +1,52 @@
+.account-hover-card {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #f7f4f4;
+    width: 300px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .6s;
+    transition-delay: .25s;
+}
+
+.account-header {
+    height: 50px;
+    background-color: rgb(231, 228, 228);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #666;
+    padding: 0 10px;
+}
+.account-header a {
+    color: #666;
+    text-decoration: underline;
+}
+.account-header a:hover {
+    color: blue;
+}
+.fa-times:hover {
+    color: blue;
+}
+.account-footer {
+    display: flex;
+    flex-direction: column;
+
+}
+.account-footer-link {
+    height: 50px;
+    color: #666;
+    text-decoration: none;
+    padding: 10px 10px 10px 25px;
+    display: flex;
+    align-items: center;
+}
+.account-footer-link span {
+    display: block;
+    padding-left: 10px;
+}
+.user-icon:hover .account-hover-card{
+    max-height: 100vh;
+    z-index: 20;
+}
