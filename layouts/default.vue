@@ -5,6 +5,7 @@
       <main>
         <Nuxt />
       </main>
+      <Footer />
     </div>
   </div>
 </template>
@@ -12,12 +13,11 @@
 export default {
   name: 'Default',
   components: {
-    Navbar: () => import('@/components/navigation/Nav')
+    Navbar: () => import('@/components/navigation/Nav'),
+    Footer: () => import('@/components/Footer')
   }
 }
 </script>
 <style>
-.app {
-  min-height: 100vh;
-}
+
 </style>

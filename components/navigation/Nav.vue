@@ -63,7 +63,3 @@ import {mapGetters} from 'vuex'
 
   }
 </script>
-
-<style lang="scss">
-@import '@/assets/style/global.scss';
-</style>

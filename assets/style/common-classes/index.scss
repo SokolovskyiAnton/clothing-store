@@ -1,0 +1,24 @@
+.gender-container {
+    max-width: 1366px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+.main-page-banner {
+    display: flex;
+    justify-content: center;
+}
+.not-products-found {
+    height: 70vh;
+    padding-top: 100px;
+    text-align: center;
+}
+.not-products-found-title {
+    padding-bottom: 40px;
+
+    font-size: 18px;
+}
+
+.not-products-found-image {
+    width: 250px;
+    height: 200px;
+}

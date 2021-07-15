@@ -1,6 +1,6 @@
 export const mutations = {
     setSubgategory(state, category) {
-        state.category = category
+        state.subcategory = category
     },
     subcategoryError(state, error) {
         state.productError = error
@@ -17,10 +17,10 @@ export const actions = {
     },
 }
 export const getters = {
-    category: ({category}) => category,
+    subcategory: ({subcategory}) => subcategory,
     subcategoryError: ({subcategoryError}) => subcategoryError
 }
 export const state = () => ({
-    category: {},
+    subcategory: {},
     subcategoryError: null
 })

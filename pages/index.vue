@@ -7,8 +7,3 @@ export default {
   middleware: 'redirected'
 }
 </script>
-
-<style>
-
-
-</style>

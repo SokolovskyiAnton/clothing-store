@@ -1,8 +1,8 @@
 .nav-footer {
     height: 50px;
     background-color: $background-nav-footer;
+    
 }
-
 .nav-footer-container {
     max-width: 1366px;
     margin: 0 auto;
@@ -13,8 +13,10 @@
 }
 
 .nav-footer-categories {
+    
     display: flex;
     height: 100%;
+    width: 100%;
 }
 .categories-item {
     display: flex;
@@ -25,26 +27,10 @@
     height: 100%;
     cursor: pointer;
     padding: 0 10px;
-    font-size: 15px;
+    font-family: Fatura-pt-book; 
+    font-size: 15.5px;
 }
 .categories-item:hover {
     color: #2d2d2d;
     background-color: #eee;
-}
-.subcategories-card {
-    position: absolute;
-    display: none;
-    background-color: #eee;
-    color: #2d2d2d;
-    width: 400px;
-    height: 400px;
-    top: 50px;
-    left: 0;
-}
-.subcategories-item {
-    list-style: none;
-}
-
-.categories-item:hover .subcategories-card {
-    display: block;
 }

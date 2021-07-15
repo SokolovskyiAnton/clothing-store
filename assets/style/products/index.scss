@@ -1,0 +1,18 @@
+@import './product-card.scss';
+.products-main-block {
+    max-width: 1366px;
+    margin: 0 auto;
+}
+.products-main-block-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+.products-main-block-item {
+    width: calc(25% - 20px);
+    list-style: none;
+    margin: 12px 0 0 12px;
+}
+
+.products-main-block-item:nth-of-type(4n+1) {
+    margin-left: 0px;
+}

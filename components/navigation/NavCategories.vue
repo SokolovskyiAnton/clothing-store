@@ -1,23 +1,21 @@
 <template>
-  <div class="nav-footer-container">
-      <ul class="nav-footer-categories" >
-            <li class="categories-item" v-for="(category, id) in sortCategories" :key="id">
-                {{category.title}}
-                <ul class="subcategories-card">
-                    <li class="subcategories-item" v-for="(subcategory, key) in category.subcategories" :key="key">
-                        <nuxt-link :to="`/${getRoute()}/products/${subcategory._id}`">{{subcategory.title}}</nuxt-link>
-                    </li>
-                </ul>
-            </li>
-          
-      </ul>
-  </div>
+    <div class="nav-footer-container">
+        <ul class="nav-footer-categories" >
+                <li class="categories-item" v-for="(category, id) in sortCategoriesByGender" :key="id">
+                    {{category.title}}
+                    <SubcategoryCard :category="category"/>               
+                </li>
+        </ul>
+    </div>
 </template>
 
 <script>
 import {mapGetters, mapActions} from 'vuex'
   export default {
     name: 'NavCategories',
+    components: {
+        SubcategoryCard: () => import('./SubcategoryCard.vue')
+    },
     methods: {
         ...mapActions({
             fetchCategories: 'category/fetchCategories'
@@ -33,14 +31,14 @@ import {mapGetters, mapActions} from 'vuex'
         ...mapGetters({
             categories: 'category/categories'
         }),
-        sortCategories() {
+        sortCategoriesByGender() {
             let category = JSON.parse(JSON.stringify(this.categories))
             function sortArr(payload, gender) {
-                let newArr = [{}]
+                let newArr = []
                 for (let i = 0; i < payload.length; i++) {
                     let obj = payload[i]
                     let subcat = obj.subcategories.filter(item => item.gender === gender)
-                    newArr = [{...obj, subcategories: subcat}]
+                    newArr.push({...obj, subcategories: subcat})
                 }
                 return newArr
             }
@@ -63,6 +61,3 @@ import {mapGetters, mapActions} from 'vuex'
     }
   }
 </script>
-
-<style scoped>
-</style>

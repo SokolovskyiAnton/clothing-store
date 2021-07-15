@@ -1,2 +1,20 @@
 @import './colors.scss';
 @import './navbar/index.scss';
+@import './products/index.scss';
+@import './common-classes/index.scss';
+@import './footer/index.scss';
+
+@font-face {
+    font-family: Fatura-pt; 
+    src: url(/fonts/FuturaPT-Light.woff); 
+}
+@font-face {
+    font-family: Fatura-pt-book; 
+    src: url(/fonts/FuturaPT-Book.woff); 
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: Fatura-pt;
+}
