@@ -6,7 +6,7 @@
                         <div class="subcategories-title"><span>SHOP BY PRODUCT</span></div>
                         <ul  class="subcategories-list">
                             <li class="subcategories-item" v-for="(subcategory, key) in category.subcategories" :key="key">
-                                <nuxt-link :to="`/${getRoute()}/products/${subcategory._id}`">{{subcategory.title}}</nuxt-link>
+                                <nuxt-link :to="`/${getRoute()}/${subcategory.slug}`">{{subcategory.title}}</nuxt-link>
                             </li>
                         </ul>
                 </div>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { routeMixin } from '@/mixins/route.mixin'
   export default {
     name: 'SubcategoryCard',
     props: {
@@ -24,13 +25,6 @@
             default: () => {}
         }
     },
-    methods: {
-        getRoute() {
-            const route = this.$route.name
-            const arrRoute = route.split('-')
-            return arrRoute[0]
-        }
-        
-    }
+    mixins: [routeMixin]
   }
 </script>

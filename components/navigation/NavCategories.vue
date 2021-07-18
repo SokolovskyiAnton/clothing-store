@@ -10,22 +10,18 @@
 </template>
 
 <script>
+import { routeMixin } from '@/mixins/route.mixin'
 import {mapGetters, mapActions} from 'vuex'
   export default {
     name: 'NavCategories',
+    mixins: [routeMixin],
     components: {
         SubcategoryCard: () => import('./SubcategoryCard.vue')
     },
     methods: {
         ...mapActions({
             fetchCategories: 'category/fetchCategories'
-        }),
-        getRoute() {
-            const route = this.$route.name
-            const arrRoute = route.split('-')
-            return arrRoute[0]
-        }
-        
+        })
     },
     computed: {
         ...mapGetters({

@@ -22,3 +22,8 @@
     width: 250px;
     height: 200px;
 }
+
+.breadcrumb-item:last-child a {
+    color: #6c757d;
+    pointer-events: none;
+}

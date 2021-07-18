@@ -2,17 +2,11 @@
     <div class="products-wrap">
         <Loader v-if="loading"/>
         <div class="products-main" v-else>
-            <div aria-label="breadcrumb"> // Сделать крошки, разобраться со slug
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Library</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Data</li>
-                </ol>
-            </div>
+            <BreadCrumbs />
             <div class="products-main-block" v-if="subcategory.products && subcategory.products.length > 0">
                 <ul class="products-main-block-list" >
                     <li class="products-main-block-item" v-for="(item, id) in subcategory.products" :key="id">
-                        <ProductCard :product="item"/>
+                        <ProductCard :product="item" @obj="getCard"/>
                     </li>
                 </ul>
             </div>
@@ -33,13 +27,16 @@ export default {
     name: 'ProductsMen',
     components: {
         NotFoundProducts: () => import('@/components/NotFoundProducts.vue'),
-        ProductCard: () => import('@/components/ProductCard')
+        ProductCard: () => import('@/components/ProductCard'),
+        BreadCrumbs: () => import('@/components/BreadCrumbs.vue')
     },
     methods: {
         ...mapActions({
             fetchSubcategory: 'subcategory/fetchSubcategory'
-        })
-        
+        }),
+        getCard(obj) {
+            this.$router.push(`${this.$route.fullPath}/${obj.slug}`)
+        }
     },
     computed: {
         isSubcategry: ({$route: {params: {id}}}) => id !== undefined,

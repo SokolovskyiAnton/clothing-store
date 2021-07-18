@@ -1,5 +1,5 @@
 <template>
-    <div class="product-card">
+    <div class="product-card" @click="getObj">
         <div class="product-card-image">
             <img :src="product.imageUrl[0]" alt="">
         </div>
@@ -15,6 +15,11 @@
         product: {
             type: Object,
             default: () => {}
+        }
+    },
+    methods: {
+        getObj() {
+            this.$emit('obj', this.product)
         }
     }
   }

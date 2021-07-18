@@ -38,9 +38,11 @@
 </template>
 
 <script>
+import { routeMixin } from '@/mixins/route.mixin'
 import {mapGetters} from 'vuex'
   export default {
     name: 'Nav',
+    mixins: [routeMixin],
     computed: {
       ...mapGetters({
         cartCount: 'cart/cartCount'
@@ -49,13 +51,6 @@ import {mapGetters} from 'vuex'
     components: {
       AccountHoverCard: () => import('./AccountHoverCard'),
       NavCategories: () => import('./NavCategories')
-    },
-    methods: {
-      getRoute() {
-        const route = this.$route.name
-        const arrRoute = route.split('-')
-        return arrRoute[0]
-      }
     },
     mounted() {
       this.getRoute()
