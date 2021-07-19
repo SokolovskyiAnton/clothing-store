@@ -1,11 +1,12 @@
 <template>
     <div class="products-wrap">
-        <Loader v-if="loading"/>
+        <Loader v-if="loader" />
         <div class="products-main" v-else>
             <BreadCrumbs />
-            <div class="products-main-block" v-if="subcategory.products && subcategory.products.length > 0">
+            <SortProduct :obj="subcategory" @sorted="sortedSubcategory"/>
+            <div class="products-main-block" v-if="this.sortedProductsOfSubcategory.length > 0">
                 <ul class="products-main-block-list" >
-                    <li class="products-main-block-item" v-for="(item, id) in subcategory.products" :key="id">
+                    <li class="products-main-block-item" v-for="(item, id) in this.sortedProductsOfSubcategory" :key="id">
                         <ProductCard :product="item" @obj="getCard"/>
                     </li>
                 </ul>
@@ -21,14 +22,16 @@ import {mapMutations, mapActions, mapGetters} from 'vuex'
 export default {
     data() {
         return {
-            loading: true
+            loader: true,
+            sortedProductsOfSubcategory: 0
         }
     },
     name: 'ProductsMen',
     components: {
-        NotFoundProducts: () => import('@/components/NotFoundProducts.vue'),
-        ProductCard: () => import('@/components/ProductCard'),
-        BreadCrumbs: () => import('@/components/BreadCrumbs.vue')
+        NotFoundProducts: () => import('@/components/common-components/NotFoundProducts.vue'),
+        BreadCrumbs: () => import('@/components/common-components/BreadCrumbs.vue'),
+        ProductCard: () => import('@/components/products/ProductCard'),
+        SortProduct: () => import('@/components/products/SortProduct.vue')
     },
     methods: {
         ...mapActions({
@@ -36,6 +39,9 @@ export default {
         }),
         getCard(obj) {
             this.$router.push(`${this.$route.fullPath}/${obj.slug}`)
+        },
+        sortedSubcategory(obj) {
+            this.sortedProductsOfSubcategory = obj.products
         }
     },
     computed: {
@@ -47,7 +53,7 @@ export default {
     mounted() {
         if (this.isSubcategry) {
             this.fetchSubcategory(this.$route.params.id)
-            this.loading = false
+            this.loader = false
             return
         }
     }

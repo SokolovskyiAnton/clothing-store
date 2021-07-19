@@ -1,0 +1,16 @@
+.sort-product {
+    margin: 40px 0 40px 0;
+}
+.sort-list {
+    display: flex;
+    max-width: 1366px;
+    margin: 0 auto;
+}
+.sort-list-item {
+    list-style: none;
+    width: calc(17.5% - 17.5px);
+    padding: 10px 10px 10px 0;
+}
+.multiselect__placeholder {
+    font-weight: bold;
+}

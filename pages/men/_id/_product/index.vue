@@ -1,8 +1,10 @@
 <template>
-    <div class="product-info">
-        <Loader v-if="loading"/>
-        <BreadCrumbs />
-        {{product}}
+    <div class="product">
+        <Loader v-if="loader"/>
+        <div class="product-info" v-else>
+            <BreadCrumbs />
+            {{product}}
+        </div>
     </div>
 </template>
 
@@ -11,11 +13,11 @@ import {mapMutations, mapActions, mapGetters} from 'vuex'
   export default {
     data() {
         return {
-            loading: true
+            loader: true
         }
     },
     components: {
-        BreadCrumbs: () => import('@/components/BreadCrumbs.vue')
+        BreadCrumbs: () => import('@/components/common-components/BreadCrumbs.vue')
     },
     methods: {
         ...mapActions({
@@ -31,7 +33,7 @@ import {mapMutations, mapActions, mapGetters} from 'vuex'
     mounted() {
         if (this.isProduct) {
             this.fetchProduct(this.$route.params.product)
-            this.loading = false
+            this.loader = false
             return
         }
     }

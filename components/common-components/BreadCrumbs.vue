@@ -1,13 +1,14 @@
 <template>
     <div aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item " v-for="(index, key) in crumbs" :key="key">
-                <nuxt-link :to="`${index.path}`">
-                    {{index.name}}
-                </nuxt-link>
-            </li>
-            
-        </ol>
+        <div class="breadcrumb-wrap">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item " v-for="(index, key) in crumbs" :key="key">
+                    <nuxt-link :to="`${index.path}`">
+                        {{index.name}}
+                    </nuxt-link>
+                </li>
+            </ol>
+        </div>
     </div>
 </template>
 

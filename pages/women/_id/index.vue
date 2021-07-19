@@ -1,6 +1,6 @@
 <template>
     <div class="products-wrap">
-        <Loader v-if="loading"/>
+        <Loader v-if="loader"/>
         <div class="products-main" v-else>
             <BreadCrumbs />
             <div class="products-main-block" v-if="subcategory.products && subcategory.products.length > 0">
@@ -21,14 +21,14 @@ import {mapMutations, mapActions, mapGetters} from 'vuex'
 export default {
     data() {
         return {
-            loading: true
+            loader: true
         }
     },
     name: 'ProductsMen',
     components: {
-        NotFoundProducts: () => import('@/components/NotFoundProducts.vue'),
-        ProductCard: () => import('@/components/ProductCard'),
-        BreadCrumbs: () => import('@/components/BreadCrumbs.vue')
+        NotFoundProducts: () => import('@/components/common-components/NotFoundProducts.vue'),
+        BreadCrumbs: () => import('@/components/common-components/BreadCrumbs.vue'),
+        ProductCard: () => import('@/components/products/ProductCard')
     },
     methods: {
         ...mapActions({
@@ -44,7 +44,7 @@ export default {
     mounted() {
         if (this.isSubcategry) {
             this.fetchSubcategory(this.$route.params.id)
-            this.loading = false
+            this.loader = false
             return
         }
     }
