@@ -4,32 +4,54 @@
             <!-- Попробовать сделать автоматическую генерацию опций, закончить сортировку, цена в карточке продукта, подумать над мультиселектом -->
             <li class="sort-list-item">
                 <multiselect class="sort-multiselect"
-                    :options="optionOfSort"
-                    v-model="selected"
+                    :options="[ 'Price high to low', 'Price low to high' ]"
+                    v-model="filtered.selected"
                     placeholder="Sort"
                     :select-label="''"
                     deselect-label="remove"
-                    @input="sortByPrice()"
+
                 ></multiselect>
             </li>
             <li class="sort-list-item">
                 <multiselect class="sort-multiselect"
-                    :options="options.optionsOfProductType"
-                    v-model="filter.styles"
+                    :options="options.productType"
+                    v-model="filtered.type"
                     placeholder="Style"
                     :select-label="''"
                     deselect-label="remove"
-                    @input="sortByStyle()"
+
                 ></multiselect>
             </li>
             <li class="sort-list-item">
                 <multiselect class="sort-multiselect"
-                    :options="options.optionsOfBrand"
-                    v-model="filter.brand"
+                    :options="options.brand"
+                    v-model="filtered.brand"
                     placeholder="Brand"
                     :select-label="''"
                     deselect-label="remove"
+
                 ></multiselect>
+            </li>
+            <li class="sort-list-item">
+                <multiselect class="sort-multiselect"
+                    :options="options.colors"
+                    v-model="filtered.color"
+                    placeholder="Color"
+                    :select-label="''"
+                    deselect-label="remove"
+                ></multiselect>
+            </li>
+            <li class="sort-list-item">
+                <multiselect class="sort-multiselect"
+                    :options="options.sizes"
+                    v-model="filtered.size"
+                    placeholder="Size"
+                    :select-label="''"
+                    deselect-label="remove"
+                ></multiselect>
+            </li>
+            <li>
+                <input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange3" v-model="filtered.priceRange">
             </li>
         </ul>
     </div>
@@ -41,19 +63,20 @@ export default {
     name: 'SortProduct',
     data() {
         return {
-            sortedObj: 0,
-            selected: '',
-            filter: {
-                styles: null,
-                colors: null,
+            sortedObj: {},
+            filtered: {
+                selected: null,
+                type: null,
+                color: null,
                 brand: null,
-                sizes: null,
+                size: null,
                 priceRange: null
             },
-            optionOfSort: [ 'Price high to low', 'Price low to high' ],
             options: {
-                optionsOfProductType: [],
-                optionsOfBrand: []
+                productType: [],
+                brand: [],
+                colors: [],
+                sizes: []
             },
         }
     },
@@ -65,106 +88,40 @@ export default {
     },
     methods: {
         genericOptions() {
-
-            const data = this.sortedObj.products.map(item => item.productType)
-            const newData = [...new Set(data)];
-            this.optionsOfProductType = newData
-        },
-        sortByPrice() {
-            const obj = this.sortedObj
-            const products = obj.products
-
-            if (this.selected === 'Price low to high') {
-                products.sort((a, b) => (a.newPrice || a.price) > (b.newPrice || b.price) ? 1 : -1)
-                return this.sortedObj = {...obj, products: products}
-            } else {
+            let mainObj = JSON.parse(JSON.stringify(this.obj))
+            for (let item in this.options) {
                 
-                products.sort((a, b) => (a.newPrice || a.price) < (b.newPrice || b.price) ? 1 : -1)
-                return this.sortedObj = {...obj, products: products}
+                let arr = []
+                mainObj.products.forEach(i => {
+                    if (Array.isArray(i[item])) {
+                        arr.push(...i[item])
+                    } else {
+                        arr.push(i[item])
+                    }
+                })
+                const newArr = [...new Set(arr)].sort()
+                this.options[item] = newArr
             }
-        },
-        sortByStyle() {
-
         }
     },
     mounted() {
-        this.sortedObj = JSON.parse(JSON.stringify(this.obj))
+        this.filtered = {
+            selected: null,
+            type: null,
+            color: null,
+            brand: null,
+            size: null,
+            priceRange: null
+        }
         this.genericOptions()
     },
     watch: {
-        sortedObj() {
-            this.$emit('sorted', this.sortedObj)
-        },
-        obj() {
-            this.sortedObj = JSON.parse(JSON.stringify(this.obj))
+        filtered: {
+            handler() {
+                this.$emit('sorted', this.filtered)
+            },
+            deep: true 
         }
     }
 }
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <li class="sort-list-item">
-                <multiselect class="sort-multiselect"
-                    :options="[]"
-                    v-model="filter.styles"
-                    placeholder="Style"
-                    :select-label="''"
-                    deselect-label="remove"
-                ></multiselect>
-            </li>
-            <li class="sort-list-item">
-                <multiselect class="sort-multiselect"
-                    :options="[]"
-                    v-model="filter.brand"
-                    placeholder="Brand"
-                    :select-label="''"
-                    deselect-label="remove"
-                ></multiselect>
-            </li>
-            <li class="sort-list-item">
-                <multiselect class="sort-multiselect"
-                    :options="[]"
-                    v-model="filter.sizes"
-                    placeholder="Size"
-                    :select-label="''"
-                    deselect-label="remove"
-                ></multiselect>
-            </li>
-            <li class="sort-list-item">
-                <multiselect class="sort-multiselect"
-                    :options="[]"
-                    v-model="filter.colors"
-                    placeholder="Color"
-                    :select-label="''"
-                    deselect-label="remove"
-                ></multiselect>
-            </li>
-            <li class="sort-list-item">
-                <multiselect class="sort-multiselect"
-                    :options="[]"
-                    v-model="filter.priceRange"
-                    placeholder="Price range"
-                    :select-label="''"
-                    deselect-label="remove"
-                ></multiselect>
-            </li> -->

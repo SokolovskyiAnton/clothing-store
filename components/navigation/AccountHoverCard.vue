@@ -1,13 +1,10 @@
 <template>
-  <div class="account-hover-card">
+  <div class="account-hover-card" ref="card">
             <div class="account-header">
                 <div class="account-header-left">
                     <nuxt-link to="/auth/login">Sign in</nuxt-link>
                     <span>|</span>
                     <nuxt-link to="/auth/register">Join</nuxt-link>
-                </div>
-                <div class="account-header-rigth">
-                    <font-awesome-icon class="fa fa-times" icon="times"/>
                 </div>
             </div>
             <div class="account-footer">
@@ -25,6 +22,12 @@
 
 <script>
   export default {
-    name: 'AccountHoverCard'
+    name: 'AccountHoverCard',
+    methods: {
+        hideBlock() {
+            this.$refs.card.style.maxHeight = '0'
+            this.$refs.card.style.zIndex = '0'
+        }
+    }
   }
 </script>

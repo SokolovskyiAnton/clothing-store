@@ -15,7 +15,6 @@
     background-color: rgb(231, 228, 228);
     display: flex;
     align-items: center;
-    justify-content: space-between;
     color: #666;
     padding: 0 10px;
 }
@@ -23,12 +22,16 @@
     color: #666;
     text-decoration: underline;
 }
+.account-header-left {
+    padding-left: 15px;
+}
 .account-header a:hover {
     color: blue;
 }
 .fa-times:hover {
     color: blue;
 }
+
 .account-footer {
     display: flex;
     flex-direction: column;
@@ -46,7 +49,14 @@
     display: block;
     padding-left: 10px;
 }
-.user-icon:hover .account-hover-card{
+
+.user-icon:hover .account-hover-card {
     max-height: 100vh;
     z-index: 20;
+}
+@media (max-width: 1025px) {
+    .user-icon:hover .account-hover-card {
+        max-height: 0;
+        z-index: 0;
+    }
 }

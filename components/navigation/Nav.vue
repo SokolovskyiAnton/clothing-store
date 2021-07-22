@@ -20,7 +20,7 @@
                 <nuxt-link to="/account" class="nav-header-icons-list__item-link">
                   <font-awesome-icon class="fa" icon="user"/>
                 </nuxt-link>
-                <AccountHoverCard/>
+                <AccountHoverCard />
               </div>
               <div class="nav-header-icons-list__item">
                 <nuxt-link to="/cart" class="nav-header-icons-list__item-link cart-item">
@@ -52,6 +52,7 @@ import {mapGetters} from 'vuex'
       AccountHoverCard: () => import('./AccountHoverCard'),
       NavCategories: () => import('./NavCategories')
     },
+  
     mounted() {
       this.getRoute()
     }

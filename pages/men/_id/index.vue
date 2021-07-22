@@ -3,11 +3,11 @@
         <Loader v-if="loader" />
         <div class="products-main" v-else>
             <BreadCrumbs />
-            <SortProduct :obj="subcategory" @sorted="sortedSubcategory"/>
-            <div class="products-main-block" v-if="this.sortedProductsOfSubcategory.length > 0">
+            <SortProduct :obj="subcategory" @sorted="sortSubcategory" />
+            <div class="products-main-block" v-if="this.sortedProducts && this.sortedProducts.length > 0">
                 <ul class="products-main-block-list" >
-                    <li class="products-main-block-item" v-for="(item, id) in this.sortedProductsOfSubcategory" :key="id">
-                        <ProductCard :product="item" @obj="getCard"/>
+                    <li class="products-main-block-item" v-for="(item, id) in this.sortedProducts" :key="id">
+                        <ProductCard :product="item" @obj="goToCard"/>
                     </li>
                 </ul>
             </div>
@@ -23,7 +23,7 @@ export default {
     data() {
         return {
             loader: true,
-            sortedProductsOfSubcategory: 0
+            sortedProducts: []
         }
     },
     name: 'ProductsMen',
@@ -37,11 +37,71 @@ export default {
         ...mapActions({
             fetchSubcategory: 'subcategory/fetchSubcategory'
         }),
-        getCard(obj) {
+        goToCard(obj) {
             this.$router.push(`${this.$route.fullPath}/${obj.slug}`)
         },
-        sortedSubcategory(obj) {
-            this.sortedProductsOfSubcategory = obj.products
+        sortSubcategory(dataFilter) {
+            let mainArr = JSON.parse(JSON.stringify(this.subcategory.products))
+
+            function sortProducts() {
+                let arr = JSON.parse(JSON.stringify(mainArr))
+                let {brand, color, priceRange, size, type, selected} = dataFilter
+
+                if (selected) {
+                    let newArr = JSON.parse(JSON.stringify(arr))
+                    if (selected == 'Price low to high') {
+                        arr = newArr.sort((a, b) => (a.newPrice || a.price) > (b.newPrice || b.price) ? 1 : -1)
+
+                    } else if (selected == 'Price high to low') {
+                        arr = newArr.sort((a, b) => (a.newPrice || a.price) < (b.newPrice || b.price) ? 1 : -1)  
+                    } 
+                }
+                if (brand) {
+                    
+                    let sortedProducts = []
+                    for (let i = 0; i < arr.length; i++) {
+                        if (arr[i].brand == brand) {
+                            sortedProducts.push(arr[i])
+                        }
+                    }
+                    arr = [...sortedProducts]
+                }
+                if (type) {
+                    let sortedProducts = []
+                    for (let i = 0; i < arr.length; i++) {
+                        if (arr[i].productType == type) {
+                            sortedProducts.push(arr[i])
+                        }
+                    }
+                    arr = [...sortedProducts]
+                }
+                if (color) {
+                    let sortedProducts = []
+                    for (let i = 0; i < arr.length; i++) {
+                        if (arr[i].colors == color) {
+                            
+                            sortedProducts.push(arr[i])
+                        }
+                    }
+                    arr = [...sortedProducts]
+                }
+                if (size) {
+                    let sortedProducts = []
+                    for (let i = 0; i < arr.length; i++) {
+                        arr[i].sizes.forEach(item => {
+                            if (item == size) {
+                                sortedProducts.push(arr[i])
+                            }
+                        })
+                    }
+                    arr = [...sortedProducts]
+                }
+                
+                return arr
+            }
+            let sortedArray = sortProducts()
+     
+            return this.sortedProducts = sortedArray
         }
     },
     computed: {
@@ -50,9 +110,9 @@ export default {
             subcategory: 'subcategory/subcategory'
         })
     },
-    mounted() {
+    async mounted() {
         if (this.isSubcategry) {
-            this.fetchSubcategory(this.$route.params.id)
+            await this.fetchSubcategory(this.$route.params.id)
             this.loader = false
             return
         }

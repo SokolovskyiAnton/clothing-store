@@ -11,6 +11,9 @@
     width: calc(17.5% - 17.5px);
     padding: 10px 10px 10px 0;
 }
+.multiselect {
+    cursor: pointer;
+}
 .multiselect__placeholder {
     font-weight: bold;
 }
