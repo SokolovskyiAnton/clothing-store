@@ -50,9 +50,15 @@
                     deselect-label="remove"
                 ></multiselect>
             </li>
-            <li>
-                <input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange3" v-model="filtered.priceRange">
+            <li class="sort-list-item">
+                <Select
+                 @selectedItem="updateFiltered"
+                 :selectModel="'brand'" 
+                 :placeholder="'Style'" 
+                 :options="[{name: 'adidas', amount: '6'},{name: 'Nike', amount: '2'},{name: 'Nike', amount: '2'}]"
+                />
             </li>
+            
         </ul>
     </div>
 </template>
@@ -61,6 +67,9 @@
 
 export default {
     name: 'SortProduct',
+    components: {
+        Select: () => import('@/components/products/Select.vue')
+    },
     data() {
         return {
             sortedObj: {},
@@ -102,6 +111,9 @@ export default {
                 const newArr = [...new Set(arr)].sort()
                 this.options[item] = newArr
             }
+        },
+        updateFiltered(obj) {
+            this.filtered = obj
         }
     },
     mounted() {

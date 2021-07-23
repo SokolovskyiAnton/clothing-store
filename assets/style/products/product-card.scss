@@ -2,11 +2,13 @@
     width: 100%;
     height: 100%;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
 }
 
 .product-card-image {
     overflow: hidden;
-    height: 405px;
+    max-height: 405px;
 }
 
 .product-card-image img {

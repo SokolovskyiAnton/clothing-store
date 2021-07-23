@@ -1,0 +1,64 @@
+.my-select {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #e8e8e8;
+    
+    cursor: pointer;
+    color: #999
+}
+
+.my-select-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 5px;
+}
+.my-select-arrow {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.my-select-block:hover {
+    color: #0770cf;
+}
+
+.my-select-hidden-block {
+    position: absolute;
+    width: calc(100% + 2px);
+    left: -1px;
+    border: 1px solid #e8e8e8;
+    background-color: white;
+    z-index: 40;
+    border-radius: 0 0 5px 5px;
+}
+.my-select-empty-list {
+    height: 30px;
+}
+
+.my-select-list{
+    height: 100%;
+}
+.my-select-list-item {
+    list-style: none;
+    height: 100%;
+    padding: 12px;
+    min-height: 40px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    font-family: Fatura-pt-book;
+}
+.my-select-list-item:last-child {
+    border-radius: 0 0 5px 5px;
+}
+.my-select-list-item:hover {
+    background: #41b883;
+    color: white;
+    
+}
+.hideBlock {
+    display: none;
+}
