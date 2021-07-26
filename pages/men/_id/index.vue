@@ -3,7 +3,7 @@
         <Loader v-if="loader" />
         <div class="products-main" v-else>
             <BreadCrumbs />
-            <SortProduct :obj="subcategory" @sorted="sortSubcategory" />
+            <SortProduct :obj=" sortedProducts || subcategory.products" @sorted="sortSubcategory" />
             <div class="products-main-block" v-if="this.sortedProducts && this.sortedProducts.length > 0">
                 <ul class="products-main-block-list" >
                     <li class="products-main-block-item" v-for="(item, id) in this.sortedProducts" :key="id">
@@ -93,6 +93,15 @@ export default {
                                 sortedProducts.push(arr[i])
                             }
                         })
+                    }
+                    arr = [...sortedProducts]
+                }
+                if (priceRange) {
+                    let sortedProducts = []
+                    for (let i = 0; i < arr.length; i++) {
+                        if (arr[i].price <= +priceRange) {
+                            sortedProducts.push(arr[i])
+                        }
                     }
                     arr = [...sortedProducts]
                 }

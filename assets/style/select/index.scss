@@ -42,6 +42,8 @@
     height: 100%;
 }
 .my-select-list-item {
+    display: flex;
+    justify-content: space-between;
     list-style: none;
     height: 100%;
     padding: 12px;
@@ -61,4 +63,84 @@
 }
 .hideBlock {
     display: none;
+}
+
+.selected {
+    background: #f3f3f3;
+    color: #35495e;
+    font-weight: 500;
+}
+
+.selected:hover {
+    background: #ff6a6a;;
+    color: white;
+}
+
+.selected:hover::after{
+    color: white;
+    content: 'remove';
+    font-size: 13px;
+
+}
+
+// price range
+
+.price-range-header {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    min-height: 60px;
+    border-bottom: 1px solid #e8e8e8;;
+}
+.price-range-header-left {
+    flex-basis: 70%;
+    font-weight: 600;
+}
+.price-range-header-left-title {
+    font-size: 15px;
+    font-weight: 600;
+}
+.price-range-header-left-price {
+    font-size: 12px;
+}
+.price-range-header-rigth {
+    flex-basis: 30%;
+}
+
+.price-range-button {
+    border-radius: 0;
+    background: none;
+    cursor: pointer;
+    line-height: normal;
+    letter-spacing: 1.9px;
+    font-size: 13px;
+    line-height: 1.54;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    color: #666;
+    border: 2px solid #999;
+    min-width: 70px;
+    padding: 0 10px;
+    height: 34px;
+    margin: 0 5px 0 8px;
+}
+.price-range-button:hover {
+    color: blue;
+    border-color: blue;
+}
+.price-range-block {
+    padding: 7px 15px 7px 15px;
+}
+.price-range-block-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 70px;
+}
+
+input[type=range] {
+    width: 100%;
 }

@@ -3,62 +3,54 @@
         <ul class="sort-list"> 
             <!-- Попробовать сделать автоматическую генерацию опций, закончить сортировку, цена в карточке продукта, подумать над мультиселектом -->
             <li class="sort-list-item">
-                <multiselect class="sort-multiselect"
-                    :options="[ 'Price high to low', 'Price low to high' ]"
-                    v-model="filtered.selected"
-                    placeholder="Sort"
-                    :select-label="''"
-                    deselect-label="remove"
-
-                ></multiselect>
+                <Select
+                 @selectedItem="updateFiltered"
+                 :selectModel="'selected'" 
+                 :placeholder="'Sort'" 
+                 :options="[ {name: 'Price high to low'}, {name: 'Price low to high'} ]"
+                />
             </li>
             <li class="sort-list-item">
-                <multiselect class="sort-multiselect"
-                    :options="options.productType"
-                    v-model="filtered.type"
-                    placeholder="Style"
-                    :select-label="''"
-                    deselect-label="remove"
-
-                ></multiselect>
+                <Select
+                 @selectedItem="updateFiltered"
+                 :selectModel="'type'" 
+                 :placeholder="'Style'" 
+                 :options="options.productType"
+                />
             </li>
             <li class="sort-list-item">
-                <multiselect class="sort-multiselect"
-                    :options="options.brand"
-                    v-model="filtered.brand"
-                    placeholder="Brand"
-                    :select-label="''"
-                    deselect-label="remove"
-
-                ></multiselect>
-            </li>
-            <li class="sort-list-item">
-                <multiselect class="sort-multiselect"
-                    :options="options.colors"
-                    v-model="filtered.color"
-                    placeholder="Color"
-                    :select-label="''"
-                    deselect-label="remove"
-                ></multiselect>
-            </li>
-            <li class="sort-list-item">
-                <multiselect class="sort-multiselect"
-                    :options="options.sizes"
-                    v-model="filtered.size"
-                    placeholder="Size"
-                    :select-label="''"
-                    deselect-label="remove"
-                ></multiselect>
+                <Select
+                 @selectedItem="updateFiltered"
+                 :selectModel="'color'" 
+                 :placeholder="'Color'" 
+                 :options="options.colors"
+                />
             </li>
             <li class="sort-list-item">
                 <Select
                  @selectedItem="updateFiltered"
                  :selectModel="'brand'" 
-                 :placeholder="'Style'" 
-                 :options="[{name: 'adidas', amount: '6'},{name: 'Nike', amount: '2'},{name: 'Nike', amount: '2'}]"
+                 :placeholder="'Brand'" 
+                 :options="options.brand"
                 />
             </li>
-            
+            <li class="sort-list-item">
+                <Select
+                 @selectedItem="updateFiltered"
+                 :selectModel="'size'" 
+                 :placeholder="'Size'" 
+                 :options="options.sizes"
+                />
+            </li>
+             <li class="sort-list-item">
+               <Select
+                @selectedItem="updateFiltered"
+                :selectModel="'priceRange'"
+                :placeholder="'Price range'"
+                :options="options.priceRange"
+                :range="true"
+               />
+            </li>
         </ul>
     </div>
 </template>
@@ -85,35 +77,61 @@ export default {
                 productType: [],
                 brand: [],
                 colors: [],
-                sizes: []
+                sizes: [],
+                priceRange: []
             },
         }
     },
     props: {
         obj: {
-            type: Object,
-            default: () => {}
+            type: Array,
+            default: () => []
         }
     },
     methods: {
+        
         genericOptions() {
             let mainObj = JSON.parse(JSON.stringify(this.obj))
             for (let item in this.options) {
-                
                 let arr = []
-                mainObj.products.forEach(i => {
+                let maxPrice = []
+                mainObj.forEach(i => {
                     if (Array.isArray(i[item])) {
-                        arr.push(...i[item])
+                        for (let i of i[item]) {
+                            arr.push({name: i, amount: 1})
+                        }
+                    } else if (item == 'priceRange') {
+                        arr.push(i.price)
                     } else {
-                        arr.push(i[item])
+                        arr.push({name: i[item], amount: 1})
                     }
                 })
-                const newArr = [...new Set(arr)].sort()
-                this.options[item] = newArr
+                if (item == 'priceRange') {
+                    let result = Math.max(...arr)
+                    this.options[item] = [result]
+                } else {
+                    let tempObj = {}
+                
+                    for ( let { name } of arr )
+                        tempObj[name] = { 
+                            name, 
+                            amount: tempObj[name] ? tempObj[name].amount + 1 : 1
+                        }      
+
+                    let sortedArr = Object.values(tempObj)
+
+                    this.options[item] = sortedArr
+                }
             }
         },
-        updateFiltered(obj) {
-            this.filtered = obj
+        updateFiltered(item, selected) {
+        
+            let filtered = this.filtered
+            for (let i in filtered) {
+                if (i == item) {
+                    return this.filtered = {...filtered, [i]: selected}
+                }
+            }
         }
     },
     mounted() {
@@ -133,6 +151,9 @@ export default {
                 this.$emit('sorted', this.filtered)
             },
             deep: true 
+        },
+        obj() {
+            this.genericOptions()
         }
     }
 }
