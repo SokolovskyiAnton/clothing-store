@@ -8,7 +8,7 @@
                 </div>
             </div>
             <div class="my-select-hidden-block" :class="{hideBlock: isOpen}">
-                <ul class="my-select-list" v-if="options && options.length > 0">
+                <ul class="my-select-list" v-if="options && options.length > 0" ref="select">
                     <li class="my-select-list-item" 
                         @click="getElem" 
                         v-for="(item, idx) in options" :key="idx"
@@ -37,7 +37,7 @@
                         <button @click="clearPriceRange" class="price-range-button">CLEAR</button>
                     </div>
                 </div>
-                <div class="price-range-block" v-if="options && options.length > 0">
+                <div class="price-range-block">
                     <div class="price-range-block-wrap">
                         <div class="d-flex justify-content-between w-100"><span>0</span>  <span>${{filtered.priceRange}}</span></div>
                         <input type="range" v-model="filtered.priceRange" @mouseup="priceRangeChange" min="0" :max="maxRange" step="5">
@@ -91,6 +91,7 @@ export default {
             this.isOpen = !this.isOpen
         },
         getElem(e) {
+            
             let selected = e.target.textContent.replace(/\(.*\)/s, '').trim() // регулярное выражение, которое удаляет круглые скобки и числа внутри
 
             for (let i of e.path[0].classList) {
@@ -110,10 +111,10 @@ export default {
             this.$emit('selectedItem', this.selectModel, this.filtered.priceRange)
         }
     },
-    mounted() {
+    created () {
+        this.maxRange = this.options[0]
         this.rangeMode = this.range
         this.filtered.priceRange = this.options[0]
-        this.maxRange = JSON.parse(JSON.stringify(this.options[0]))
     }
 }
 </script>

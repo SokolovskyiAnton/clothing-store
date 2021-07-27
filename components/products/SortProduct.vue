@@ -1,70 +1,30 @@
 <template>
     <div class="sort-product">
         <ul class="sort-list"> 
-            <!-- Попробовать сделать автоматическую генерацию опций, закончить сортировку, цена в карточке продукта, подумать над мультиселектом -->
-            <li class="sort-list-item">
+            
+            <li class="sort-list-item" v-for="(field, id) in fields" :key="id">
                 <Select
                  @selectedItem="updateFiltered"
-                 :selectModel="'selected'" 
-                 :placeholder="'Sort'" 
-                 :options="[ {name: 'Price high to low'}, {name: 'Price low to high'} ]"
+                 :selectModel="field.model" 
+                 :placeholder="field.placeholder" 
+                 :options="field.option || options[field.options]"
+                 :range="field.range"
                 />
             </li>
-            <li class="sort-list-item">
-                <Select
-                 @selectedItem="updateFiltered"
-                 :selectModel="'type'" 
-                 :placeholder="'Style'" 
-                 :options="options.productType"
-                />
-            </li>
-            <li class="sort-list-item">
-                <Select
-                 @selectedItem="updateFiltered"
-                 :selectModel="'color'" 
-                 :placeholder="'Color'" 
-                 :options="options.colors"
-                />
-            </li>
-            <li class="sort-list-item">
-                <Select
-                 @selectedItem="updateFiltered"
-                 :selectModel="'brand'" 
-                 :placeholder="'Brand'" 
-                 :options="options.brand"
-                />
-            </li>
-            <li class="sort-list-item">
-                <Select
-                 @selectedItem="updateFiltered"
-                 :selectModel="'size'" 
-                 :placeholder="'Size'" 
-                 :options="options.sizes"
-                />
-            </li>
-             <li class="sort-list-item">
-               <Select
-                @selectedItem="updateFiltered"
-                :selectModel="'priceRange'"
-                :placeholder="'Price range'"
-                :options="options.priceRange"
-                :range="true"
-               />
-            </li>
+
         </ul>
     </div>
 </template>
 
 <script>
-
+import {fields} from '@/pages/men/_id/fields'
 export default {
     name: 'SortProduct',
     components: {
-        Select: () => import('@/components/products/Select.vue')
+        Select: () => import('@/components/Select.vue')
     },
     data() {
         return {
-            sortedObj: {},
             filtered: {
                 selected: null,
                 type: null,
@@ -75,40 +35,47 @@ export default {
             },
             options: {
                 productType: [],
-                brand: [],
                 colors: [],
+                brand: [],
                 sizes: [],
                 priceRange: []
             },
+            fields
         }
     },
     props: {
-        obj: {
+        arr: {
             type: Array,
             default: () => []
         }
     },
     methods: {
-        
         genericOptions() {
-            let mainObj = JSON.parse(JSON.stringify(this.obj))
-            for (let item in this.options) {
+            let mainArr = JSON.parse(JSON.stringify(this.arr))
+            for (let option in this.options) {
                 let arr = []
-                let maxPrice = []
-                mainObj.forEach(i => {
-                    if (Array.isArray(i[item])) {
-                        for (let i of i[item]) {
+
+                mainArr.forEach(item => {
+                    if (Array.isArray(item[option])) {
+                        for (let i of item[option]) {
                             arr.push({name: i, amount: 1})
                         }
-                    } else if (item == 'priceRange') {
-                        arr.push(i.price)
+                    } else if (option == 'priceRange') {
+                        arr.push(item.price)
                     } else {
-                        arr.push({name: i[item], amount: 1})
+                        arr.push({name: item[option], amount: 1})
                     }
                 })
-                if (item == 'priceRange') {
-                    let result = Math.max(...arr)
-                    this.options[item] = [result]
+                if (option == 'priceRange') {
+                    
+                    if (arr == false) {
+                        this.options[option] = [0]
+                    } else {
+                        let result = Math.max(...arr)
+                    
+                        this.options[option] = [result]
+                    }
+                    
                 } else {
                     let tempObj = {}
                 
@@ -120,12 +87,11 @@ export default {
 
                     let sortedArr = Object.values(tempObj)
 
-                    this.options[item] = sortedArr
+                    this.options[option] = sortedArr
                 }
-            }
+            }  
         },
         updateFiltered(item, selected) {
-        
             let filtered = this.filtered
             for (let i in filtered) {
                 if (i == item) {
@@ -134,7 +100,7 @@ export default {
             }
         }
     },
-    mounted() {
+    created() {
         this.filtered = {
             selected: null,
             type: null,
@@ -152,7 +118,7 @@ export default {
             },
             deep: true 
         },
-        obj() {
+        arr() {
             this.genericOptions()
         }
     }

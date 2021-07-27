@@ -3,7 +3,7 @@
         <Loader v-if="loader" />
         <div class="products-main" v-else>
             <BreadCrumbs />
-            <SortProduct :obj=" sortedProducts || subcategory.products" @sorted="sortSubcategory" />
+            <SortProduct :arr="sortedProducts || newSubcategory.products" @sorted="sortSubcategory"/>
             <div class="products-main-block" v-if="this.sortedProducts && this.sortedProducts.length > 0">
                 <ul class="products-main-block-list" >
                     <li class="products-main-block-item" v-for="(item, id) in this.sortedProducts" :key="id">
@@ -23,7 +23,8 @@ export default {
     data() {
         return {
             loader: true,
-            sortedProducts: []
+            sortedProducts: [],
+            newSubcategory: {}
         }
     },
     name: 'ProductsMen',
@@ -41,7 +42,7 @@ export default {
             this.$router.push(`${this.$route.fullPath}/${obj.slug}`)
         },
         sortSubcategory(dataFilter) {
-            let mainArr = JSON.parse(JSON.stringify(this.subcategory.products))
+            let mainArr = JSON.parse(JSON.stringify(this.newSubcategory.products))
 
             function sortProducts() {
                 let arr = JSON.parse(JSON.stringify(mainArr))
@@ -109,7 +110,6 @@ export default {
                 return arr
             }
             let sortedArray = sortProducts()
-     
             return this.sortedProducts = sortedArray
         }
     },
@@ -119,9 +119,11 @@ export default {
             subcategory: 'subcategory/subcategory'
         })
     },
-    async mounted() {
+    async created() {
         if (this.isSubcategry) {
             await this.fetchSubcategory(this.$route.params.id)
+            this.newSubcategory = this.subcategory
+            this.sortedProducts = this.newSubcategory.products
             this.loader = false
             return
         }
