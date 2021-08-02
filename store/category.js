@@ -9,7 +9,7 @@ export const mutations = {
 export const actions = {
     async fetchCategories({commit}) {
         try {
-            const items = await this.$axios.get('http://localhost:5005/api/v1/categories')
+            const items = await this.$axios.get('https://nuxt-clothing-store.herokuapp.com/api/v1/categories')
             commit('setCategories', items.data)
         } catch (e) {
             commit('categoryError', e)

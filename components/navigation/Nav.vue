@@ -23,7 +23,7 @@
                 <AccountHoverCard />
               </div>
               <div class="nav-header-icons-list__item">
-                <nuxt-link to="/cart" class="nav-header-icons-list__item-link cart-item">
+                <nuxt-link :to="`/cart?gender=${getRoute()}`" class="nav-header-icons-list__item-link cart-item">
                   <font-awesome-icon class="fa" icon="shopping-cart" />
                   <div class="cart-counter" v-show="cartCount">{{cartCount}}</div>
                 </nuxt-link>

@@ -17,6 +17,8 @@
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.8.3",
     "nuxt": "^2.14.12",
+    "nuxt-stripe-module": "^3.2.0",
+    "stripe": "^8.165.0",
     "vue-multiselect": "^2.1.6"
   },
   "devDependencies": {

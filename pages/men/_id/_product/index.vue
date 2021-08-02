@@ -2,8 +2,9 @@
     <div class="product">
         <Loader v-if="loader"/>
         <div class="product-wrap" v-else>
-            <BreadCrumbs />
-            <div class="product-block">
+            <BreadCrumbs /> 
+            
+            <div class="product-block"> 
                 <div class="product-block-container">
                     <div class="product-block-main">
                         <div class="product-block-gallery">
@@ -14,25 +15,41 @@
                                     :interval="10000"
                                     fade
                                     controls
-                                    @sliding-start="onSlideStart"
-                                    @sliding-end="onSlideEnd"
                                 >
                                     <b-carousel-slide  v-for="(image, id) in product.imageUrl" :key="id" :img-src="image"></b-carousel-slide>
                                 </b-carousel>
                             </div>
                         </div>
                         <div class="product-block-aside">
-                            <h3 class="product-block-aside-title">{{product.title}}</h3>
-                            <div class="product-block-aside-price">${{product.price}}</div>
-                            <div><span class="product-block-aside-delivery">Free Delivery</span></div>
-                            <div class="product-block-aside-color"><span class="aside-color-key">Color:</span> <span class="aside-color-value">{{product.colors[0]}}</span></div>
-                            <div class="product-block-aside-size">
-                                <div class="aside-size">Size:</div>
-                                <multiselect class="aside-select" v-model="selected" :options="product.sizes" placeholder="Size" :select-label="''"></multiselect>
-                                <div v-if="isSelectError" class="invalid-select">Please select from the available size options</div>
+                            <div class="product-block-wrap-header">
+                                <h3 class="product-block-aside-title">{{product.title}}</h3>
+                                <div class="product-block-aside-price">
+                                    <span v-if="product.price && !product.newPrice">${{product.price}}</span>
+                                    <span v-if="product.newPrice">
+                                        <span class="old-price">Was <s>${{product.price}}</s></span>
+                                        <span class="new-price">Now ${{product.newPrice}}<span class="percent-price">({{calculatingParcent}}%)</span></span>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="product-block-aside-delivery">Free Delivery</span>
+                                </div>
                             </div>
-                            <div class="product-block-aside-button">
-                                <button class="aside-button" @click="addToBag">Add to bag</button>
+                            <div class="product-block-wrap-footer">
+                                <div class="product-block-aside-color">
+                                    <span class="aside-color-key">Color:</span> 
+                                    <span class="aside-color-value">{{product.colors[0]}}</span>
+                                </div>
+                                <div class="product-block-aside-size">
+                                    <div class="aside-size">Size:</div>
+                                    <multiselect class="aside-select" v-model="selected" :options="product.sizes" placeholder="Size" :select-label="''"></multiselect>
+                                    <div v-if="isSelectError" class="invalid-select">Please select from the available size options</div>
+                                </div>
+                                <div class="product-block-aside-button">
+                                    <button class="aside-button" @click="addToBag" :class="{productAdded: productAdded}">
+                                        <font-awesome-icon v-if="productAdded" class="fa" icon="check" />
+                                        {{productAdded ? 'Added' : 'Add to bag'}}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -56,6 +73,7 @@ import {mapMutations, mapActions, mapGetters} from 'vuex'
             loader: true,
             selected: '',
             selectError: false,
+            productAdded: false,
             carousel: {
                 slide: 0,
                 sliding: null
@@ -69,17 +87,29 @@ import {mapMutations, mapActions, mapGetters} from 'vuex'
         ...mapActions({
             fetchProduct: 'product/fetchProduct'
         }),
-        onSlideStart() {
-            this.carousel.sliding = true
-        },
-        onSlideEnd() {
-            this.carousel.sliding = false
-        },
+        ...mapMutations({
+            addToCart: 'cart/addToCart'
+        }),
         addToBag() {
+            let key = new Date().getTime();
             if (this.selected == "" || this.selected == null) {
                 return this.selectError = true
             }
-            console.log('1');
+            this.productAdded = true
+            const obj = {...this.product, selected: this.selected, quantityOfSelected: 1, uniqueKey: key
+}
+            this.addToCart(obj)
+            this.$bvToast.toast("It's in the bag",{
+                title: 'Success!',
+                toaster: 'b-toaster-top-right',
+                autoHideDelay: 3800,
+                variant: 'success',
+                solid: true
+            })
+            setTimeout(() => {
+                this.productAdded = false
+                this.selected = ""
+            }, 2500)
         }
     },
     computed: {
@@ -94,6 +124,9 @@ import {mapMutations, mapActions, mapGetters} from 'vuex'
                 return this.selectError
             }
             
+        },
+        calculatingParcent() {
+            return ((this.product.price - this.product.newPrice) / this.product.price * 100).toFixed(1)
         }
     },
     async mounted() {

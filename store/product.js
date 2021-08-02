@@ -12,7 +12,7 @@ export const mutations = {
 export const actions = {
     async fetchProduct({commit}, id) {
         try {
-            const item = await this.$axios.get(`http://localhost:5005/api/v1/products/${id}`)
+            const item = await this.$axios.get(`https://nuxt-clothing-store.herokuapp.com/api/v1/products/${id}`)
             commit('setProduct', item.data)
         } catch (e) {
             commit('setProductError', e)
@@ -20,7 +20,7 @@ export const actions = {
     },
     async fetchProducts({commit}) {
         try {
-            const items = await this.$axios.get(`http://localhost:5005/api/v1/products`)
+            const items = await this.$axios.get(`https://nuxt-clothing-store.herokuapp.com/api/v1/products`)
             commit('setProducts', items.data)
         } catch (e) {
             commit('setProductError', e)

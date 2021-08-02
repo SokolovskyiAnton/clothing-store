@@ -39,6 +39,9 @@ export default {
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    ['nuxt-stripe-module', {
+      publishableKey: 'pk_test_51JICCwKMmuluAGxrIRc2ecuaa7gehJcxOgqKwdakgB7PbiDcYsZ2S9KhTWjpceXOmUC4iEPnDlbMx27N7ZwVbjUO00SumzfLul',
+    }]
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

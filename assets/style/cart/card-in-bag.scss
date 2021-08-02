@@ -1,0 +1,54 @@
+.card-bag-wrapper {
+    position: relative;
+    display: flex;
+    min-height: 140px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.card-bag-image img{
+    max-height: 130px;
+    width: 100%;
+}
+.card-bag-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+}
+.card-bag-price {
+    color: #2d2d2d;
+    font-weight: 700;
+    letter-spacing: 1.7px;
+    font-family: Fatura-pt-book; 
+    font-size: 15px;
+}
+.card-bag-old-price {
+    color: #999;
+    font-size: 13px;
+}
+.card-bag-title {
+    font-size: 17px;
+    letter-spacing: 1px;
+    padding: 0 25px 8px 0;
+}
+.card-bag-variants {
+    display: flex;
+    align-items: center;
+}
+.card-bag-color {
+    color: silver;
+    font-size: 17px;
+}
+
+.card-bag-multi {
+    width: 75px;
+    margin-left: 15px;
+}
+
+.card-bag-delete {
+    position: absolute;
+    top: 25px;
+    right: 10px;
+    cursor: pointer;
+}
+
+

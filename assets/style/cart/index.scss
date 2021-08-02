@@ -1,0 +1,108 @@
+@import './card-in-bag.scss';
+.cart {
+    background-color: #eee;
+    min-height: 100vh;
+}
+.cart-container {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 960px;
+    padding: 0.1px;
+}
+.cart-wrapper {
+    display: flex;
+    margin-top: 10px;
+}
+.cart-content-wrapper {
+    flex-basis: 65%;
+}
+.cart-total-wrapper {
+    flex-basis: 35%;
+    padding: 24px 30px;
+    background-color: #fff;
+    margin-left: 10px;
+    max-height: 290px;
+}
+.cart-content-header {
+    padding: 24px 30px;
+    margin-bottom: 8px;
+    background-color: #fff;
+}
+.cart-total-header {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 24px;
+    margin-bottom: 14px;
+    font-weight: 700;
+    letter-spacing: 1.7px;
+    font-family: Fatura-pt-book; 
+    font-size: 18px;
+}
+.cart-content-list {
+    background-color: #fff;
+}
+.cart-group {
+    list-style: none;
+}
+.cart-group-item {
+    padding: 0 30px;
+    border-top: 1px solid #eee;
+}
+.cart-group-item:first-child {
+    border-top: none;
+}
+.cart-content-subtotal {
+    padding: 24px 30px;
+    background-color: #fff;
+    display: flex;
+    justify-content: flex-end;
+    font-weight: 700;
+    letter-spacing: 1.7px;
+    font-family: Fatura-pt-book; 
+}
+
+.cart-total-subtotal {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7px;
+}
+.subtotal-name {
+    font-weight: 700;
+    letter-spacing: 1.7px;
+    font-family: Fatura-pt-book; 
+    font-size: 16px;
+}
+.subtotal-price {
+    font-size: 16px;
+    letter-spacing: 1.7px;
+}
+.delivery-info {
+    font-weight: 700;
+    letter-spacing: 1.7px;
+    font-family: Fatura-pt-book; 
+    font-size: 16px;
+    margin-bottom: 7px;
+}
+.cart-total-checkout {
+    margin-top: 15px;
+}
+.cart-btn-submit {
+    font-style: normal;
+    font-weight: 700;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    display: block;
+    font-size: 1em;
+    letter-spacing: 1.2px;
+    line-height: 1em;
+    padding: 1em;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 100%;
+    background: #018849;
+    color: white;
+}
+.cart-btn-submit:hover {
+    background: #036b3b;
+}

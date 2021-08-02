@@ -1,6 +1,5 @@
 <template>
     <div class="footer">
-        <hr>
         <div class="footer-group">
             <div class="footer-item"></div>
             <div class="footer-item">
