@@ -1,4 +1,5 @@
 <template>
+
     <div class="card-bag-wrapper">
         <div class="card-bag-image">
             <img :src="obj.imageUrl[0]" alt="">
@@ -12,20 +13,26 @@
                 </span>
             </div>
             <div class="card-bag-title">{{obj.title}}</div>
-            <div class="card-bag-variants">
+            <div class="card-bag-variants" v-if="!checkout">
                 <span class="card-bag-color">{{obj.colors[0] || obj.colors}}</span>
                 <div class="card-bag-multi">
-                    <multiselect v-model="selected" :options="obj.sizes" :placeholder="selected" :select-label="''" deselect-label="" selected-label=""></multiselect>
+                    <multiselect v-model="selectedSize" :options="obj.sizes" :placeholder="selectedSize" :select-label="''" deselect-label="" selected-label="" :allow-empty="false"></multiselect>
                 </div>
                 <div class="card-bag-multi">
-                    <multiselect v-model="quantity" :options="quantityList" placeholder="Qty" :select-label="''" deselect-label="" selected-label=""></multiselect>
+                    <multiselect v-model="quantity" :options="quantityList" :custom-label="nameWithLang" placeholder="Qty" :select-label="''" deselect-label="" selected-label="" :allow-empty="false"></multiselect>
                 </div>
             </div>
+            <div class="card-checkout-variants" v-else>
+                <span class="card-bag-color">{{obj.colors[0] || obj.colors}}</span>
+                <span>Size: {{obj.selected}}</span>
+                <span>Qty: {{obj.quantityOfSelected}}</span>
+            </div>
         </div>
-        <div class="card-bag-delete" @click="deleteItem">
+        <div class="card-bag-delete" @click="deleteItem" v-if="!checkout">
             <font-awesome-icon class="fa" icon="times" />
         </div>
     </div>
+
 </template>
 
 <script>
@@ -34,7 +41,7 @@ export default {
     name: 'CardInBag',
     data() {
         return {
-            selected: null,
+            selectedSize: null,
             quantity: null
         }
     },
@@ -42,6 +49,10 @@ export default {
         obj: {
             type: Object,
             default: () => {}
+        },
+        checkout: {
+            type: Boolean,
+            default: false
         }
     },
     methods: {
@@ -51,23 +62,28 @@ export default {
         }),
         deleteItem() {
             this.deleteProduct(this.obj)
+        },
+        nameWithLang (str) {
+            return `Qty ${str}`
         }
     },
     computed: {
         quantityList() {
             let list = []
             for (let i = 1; i <= 10; i++) {
-                list.push(i)
+                list.push(String(i))
             }
             return list
         }
     },
     mounted() {
-        this.selected = this.obj.selected
+        this.selectedSize = this.obj.selected,
+        this.selectedQuantity = this.obj.quantityOfSelected
+
     },
     watch: {
-        selected() {
-            this.editCartItem({...this.obj, selected: this.selected})
+        selectedSize() {
+            this.editCartItem({...this.obj, selected: this.selectedSize})
         },
         quantity() {
             this.editCartItem({...this.obj, quantityOfSelected: this.quantity})

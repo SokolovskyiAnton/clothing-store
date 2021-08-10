@@ -97,12 +97,12 @@ import {mapMutations, mapActions, mapGetters} from 'vuex'
             }
             this.productAdded = true
             const obj = {...this.product, selected: this.selected, quantityOfSelected: 1, uniqueKey: key
-}
+            }
             this.addToCart(obj)
             this.$bvToast.toast("It's in the bag",{
                 title: 'Success!',
                 toaster: 'b-toaster-top-right',
-                autoHideDelay: 3800,
+                autoHideDelay: 2000,
                 variant: 'success',
                 solid: true
             })
